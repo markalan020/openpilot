@@ -422,9 +422,10 @@ void send_peripheral_state(PubMaster *pm, Panda *panda) {
   auto ps = evt.initPeripheralState();
   ps.setPandaType(panda->hw_type);
 
+  // TODO: this rarely lags, should probably be moved to deviceState anyway
   double read_time = millis_since_boot();
-  ps.setVoltage(Hardware::get_voltage());
-  ps.setCurrent(Hardware::get_current());
+  //ps.setVoltage(Hardware::get_voltage());
+  //ps.setCurrent(Hardware::get_current());
   read_time = millis_since_boot() - read_time;
   if (read_time > 50) {
     LOGW("reading hwmon took %lfms", read_time);
