@@ -423,7 +423,7 @@ kj::Array<capnp::word> UbloxMsgParser::gen_rxm_rawx(ubx_t::rxm_rawx_t *msg) {
   mr.setGpsWeek(msg->week());
 
   auto mb = mr.initMeasurements(msg->num_meas());
-  auto measurements = *msg->measurements();
+  auto measurements = *msg->meas();
   for(int8_t i = 0; i < msg->num_meas(); i++) {
     mb[i].setSvId(measurements[i]->sv_id());
     mb[i].setPseudorange(measurements[i]->pr_mes());
@@ -452,24 +452,20 @@ kj::Array<capnp::word> UbloxMsgParser::gen_rxm_rawx(ubx_t::rxm_rawx_t *msg) {
   return capnp::messageToFlatArray(msg_builder);
 }
 
-kj::Array<capnp::word> UbloxMsgParser::gen_rxm_rawx(ubx_t::rxm_rawx_t *msg) {
+kj::Array<capnp::word> UbloxMsgParser::gen_nav_sat(ubx_t::nav_sat_t *msg) {
   MessageBuilder msg_builder;
   auto sr = msg_builder.initEvent().initUbloxGnss().initSatReport();
   sr.setITow(msg->itow());
 
-  auto svs = mr.initSvs(msg->num_svs());
+  auto svs = sr.initSvs(msg->num_svs());
   auto svs_data = *msg->svs();
-  for(int8_t i = 0; i < msg->num_meas(); i++) {
+  for(int8_t i = 0; i < msg->num_svs(); i++) {
     svs[i].setSvId(svs_data[i]->sv_id());
-    svs[i].setGnssId(svs[i]->gnss_id());
-    svs[i].setFlagBitfield(svs_data[i]->flags);
+    svs[i].setGnssId(svs_data[i]->gnss_id());
+    svs[i].setFlagsBitfield(svs_data[i]->flags());
   }
 
-  mr.setnummeas(msg->num_meas());
-  auto rs = mr.initreceiverstatus();
-  rs.setleapsecvalid(bit_to_bool(msg->rec_stat(), 0));
-  rs.setclkreset(bit_to_bool(msg->rec_stat(), 2));
-  return capnp::messagetoflatarray(msg_builder);
+  return capnp::messageToFlatArray(msg_builder);
 }
 
 kj::Array<capnp::word> UbloxMsgParser::gen_mon_hw(ubx_t::mon_hw_t *msg) {
