@@ -10,7 +10,7 @@ if GetOption('kaitai'):
   glonass = env.Command(['generated/glonass.cpp', 'generated/glonass.h'], 'glonass.ksy', cmd)
 
   # kaitai issue: https://github.com/kaitai-io/kaitai_struct/issues/910
-  patch = env.Command(None, 'glonass_fix.patch', 'git apply $SOURCES')
+  patch = env.Command(None, 'glonass_fix.patch', 'git apply --allow-empty $SOURCES')
   env.Depends(patch, glonass)
 
 glonass_obj = env.Object('generated/glonass.cpp')
