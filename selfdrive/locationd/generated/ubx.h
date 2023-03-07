@@ -176,7 +176,7 @@ public:
     public:
         class nav_t;
 
-        nav_sat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, ubx_t* p__root = 0);
+        nav_sat_t(kaitai::kstream* p__io, ubx_t* p__parent = 0, ubx_t* p__root = 0);
 
     private:
         void _read();
@@ -189,7 +189,7 @@ public:
 
         public:
 
-            nav_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, ubx_t* p__root = 0);
+            nav_t(kaitai::kstream* p__io, ubx_t::nav_sat_t* p__parent = 0, ubx_t* p__root = 0);
 
         private:
             void _read();
@@ -207,7 +207,7 @@ public:
             int16_t m_pr_res;
             uint32_t m_flags;
             ubx_t* m__root;
-            kaitai::kstruct* m__parent;
+            ubx_t::nav_sat_t* m__parent;
 
         public:
             gnss_type_t gnss_id() const { return m_gnss_id; }
@@ -218,7 +218,7 @@ public:
             int16_t pr_res() const { return m_pr_res; }
             uint32_t flags() const { return m_flags; }
             ubx_t* _root() const { return m__root; }
-            kaitai::kstruct* _parent() const { return m__parent; }
+            ubx_t::nav_sat_t* _parent() const { return m__parent; }
         };
 
     private:
@@ -228,7 +228,7 @@ public:
         std::string m_reserved;
         std::vector<nav_t*>* m_svs;
         ubx_t* m__root;
-        kaitai::kstruct* m__parent;
+        ubx_t* m__parent;
         std::vector<std::string>* m__raw_svs;
         std::vector<kaitai::kstream*>* m__io__raw_svs;
 
@@ -239,7 +239,7 @@ public:
         std::string reserved() const { return m_reserved; }
         std::vector<nav_t*>* svs() const { return m_svs; }
         ubx_t* _root() const { return m__root; }
-        kaitai::kstruct* _parent() const { return m__parent; }
+        ubx_t* _parent() const { return m__parent; }
         std::vector<std::string>* _raw_svs() const { return m__raw_svs; }
         std::vector<kaitai::kstream*>* _io__raw_svs() const { return m__io__raw_svs; }
     };

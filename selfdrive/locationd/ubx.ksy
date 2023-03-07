@@ -17,6 +17,7 @@ seq:
         0x0215: rxm_rawx
         0x0a09: mon_hw
         0x0a0b: mon_hw2
+        0x0135: nav_sat
 instances:
   checksum:
     pos: length + 6

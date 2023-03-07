@@ -40,6 +40,11 @@ void ubx_t::_read() {
         m_body = new rxm_sfrbx_t(m__io, this, m__root);
         break;
     }
+    case 309: {
+        n_body = false;
+        m_body = new nav_sat_t(m__io, this, m__root);
+        break;
+    }
     case 2571: {
         n_body = false;
         m_body = new mon_hw2_t(m__io, this, m__root);
@@ -198,7 +203,7 @@ void ubx_t::rxm_sfrbx_t::_clean_up() {
     }
 }
 
-ubx_t::nav_sat_t::nav_sat_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, ubx_t* p__root) : kaitai::kstruct(p__io) {
+ubx_t::nav_sat_t::nav_sat_t(kaitai::kstream* p__io, ubx_t* p__parent, ubx_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_svs = 0;
@@ -252,7 +257,7 @@ void ubx_t::nav_sat_t::_clean_up() {
     }
 }
 
-ubx_t::nav_sat_t::nav_t::nav_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, ubx_t* p__root) : kaitai::kstruct(p__io) {
+ubx_t::nav_sat_t::nav_t::nav_t(kaitai::kstream* p__io, ubx_t::nav_sat_t* p__parent, ubx_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
